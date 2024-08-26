@@ -1,13 +1,5 @@
-// Current SDK version: 3.22.1
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:practice_2/CallFragment.dart';
-import 'package:practice_2/CameraFragment.dart';
-import 'package:practice_2/HomeFragment.dart';
-import 'package:practice_2/MessageFragment.dart';
-import 'package:practice_2/ProfileFragment.dart';
-import 'package:practice_2/SearchFragment.dart';
 
 void main() {
   runApp(
@@ -25,96 +17,144 @@ class IntroApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: HomeActivity(),
+      // Main screen of the app
       theme: ThemeData(
-          brightness: Brightness.light,
-          appBarTheme: AppBarTheme(
-              backgroundColor: Colors.blue,
-              titleTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.4)
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blue,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.2,
           ),
-          tabBarTheme: TabBarTheme(
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.black54
-          ),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            selectedItemColor: Colors.yellow,
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-          )),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white, backgroundColor: Colors.blue),
+        ),
+      ),
       darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          appBarTheme: AppBarTheme(
-              backgroundColor: Colors.green,
-              titleTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.4)),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            selectedItemColor: Colors.green,
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-          )),
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.green,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.2,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.green),
+        ),
+      ),
       themeMode: ThemeMode.system,
     );
   }
 }
 
-class Home extends StatelessWidget {
-  Home({super.key});
-
-  MySnackBar(context, message) {
-    return ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
+class HomeActivity extends StatelessWidget {
+  const HomeActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 8,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Home"),
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.home),text: 'Home',
-              ),
-              Tab(
-                icon: Icon(Icons.message),text: 'Message',
-              ),
-              Tab(
-                icon: Icon(Icons.search),text: 'Search',
-              ),
-              Tab(
-                icon: Icon(Icons.call),text: 'Call',
-              ),
-              Tab(
-                icon: Icon(Icons.camera_alt_outlined),text: 'Camera',
-              ),
-              Tab(
-                icon: Icon(Icons.person),text: 'Profile',
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+        centerTitle: false,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-        ),
-        body: TabBarView(
-          children: [
-            HomeFragment(),
-            MessageFragment(),
-            SearchFragment(),
-            CallFragment(),
-            CameraFragment(),
-            Profilefragment(),
-          ],
-        ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Activity_1(" Home to Activity_1")),
+              );
+            },
+            child: Text("Go Activity_1"),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Activity_2("Home to Activity_2")),
+              );
+            },
+            child: Text("Go Activity_2"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Activity_1 extends StatelessWidget {
+  String msg;
+
+  Activity_1(this.msg, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(msg),
+        //centerTitle: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Activity_2(" Acitivity_1 to Activity_2")),
+              );
+            },
+            child: Text("Go Activity_2")),
+      ),
+    );
+  }
+}
+
+class Activity_2 extends StatelessWidget {
+  String msg;
+
+  Activity_2(this.msg, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(msg),
+        //centerTitle: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Activity_1("Acitivity_2 to Activity_1")),
+              );
+            },
+            child: Text("Go Activity_1")),
       ),
     );
   }
