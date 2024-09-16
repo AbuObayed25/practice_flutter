@@ -1,13 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+
 //Navigation
 void main() {
-  runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => IntroApp(), // Wrap your app
-    ),
-  );
+  runApp(IntroApp()); // Wrap your app),
 }
 
 class IntroApp extends StatelessWidget {
@@ -18,41 +14,6 @@ class IntroApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeActivity(),
-      // Main screen of the app
-      theme: ThemeData(
-        brightness: Brightness.light,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.blue,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.2,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white, backgroundColor: Colors.blue),
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.green,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1.2,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.green),
-        ),
-      ),
-      themeMode: ThemeMode.system,
     );
   }
 }
@@ -62,36 +23,155 @@ class HomeActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var height=MediaQuery.of(context).size.height;
+    var wight =MediaQuery.of(context).size.width;
+    var orientation =MediaQuery.of(context).orientation;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
         centerTitle: false,
       ),
-     body: Center(
-     //     child:Card(
-     //       elevation: 50,
-     //       color: Colors.orangeAccent,
-     //       shadowColor: Colors.orangeAccent,
-     //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-     //       child: SizedBox(
-     //         height: 200,
-     //         width: 200,
-     //         child: Center(
-     //           child: Text("This is card"),
-     //         ),
-     //       ),
-     // ),
-     //   child: CircularProgressIndicator(
-     //     color: Colors.blueAccent,
-     //   ),
-       child: LinearProgressIndicator(
-         minHeight: 4,
-         backgroundColor: Colors.blueAccent,
-         borderRadius: BorderRadius.circular(20),
-       ),
 
-     ),
+      //AspectRatio//
+
+
+      // body: Container(
+      //   color: Colors.orangeAccent,
+      //   width: double.infinity,
+      //   height: 400,
+      //   alignment: Alignment.center,
+      //   child: AspectRatio(
+      //     aspectRatio: 16/9,
+      //     child: Container(
+      //       color: Colors.green,
+      //     ),
+      //   ),
+      // ),
+
+      //FractionallySizedBox
+
+
+      // body: Center(
+      //   child: FractionallySizedBox(
+      //     widthFactor: .7,
+      //     heightFactor: .3,
+      //     child: Container(
+      //       color: Colors.orangeAccent,
+      //     ),
+      //   )
+      // ),
+
+      //LayoutBuilder//
+
+      // body: LayoutBuilder(
+      //   builder: (BuildContext context,BoxConstraints constraints){
+      //     if(constraints.maxWidth>600){
+      //       return Container(height: 400,width: 400,color: Colors.blueGrey,);
+      //     }else{
+      //       return Container(height: 200,width: 200,color: Colors.redAccent);
+      //     }
+      //   },
+      // ),
+
+      //SingleChildScrollview//
+
+      // body: SingleChildScrollView(
+      //   scrollDirection: Axis.vertical,//(Column hole)
+      //   //scrollDirection: Axis.horizontal,//(Row hole )
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.start,
+      //     children: [
+      //       Container(height: 200,width: 200,color: Colors.redAccent,),
+      //       Container(height: 200,width: 200,color: Colors.blueGrey,),
+      //       Container(height: 200,width: 200,color: Colors.green,),
+      //       Container(height: 200,width: 200,color: Colors.brown,),
+      //       Container(height: 200,width: 200,color: Colors.white,),
+      //       Container(height: 200,width: 200,color: Colors.redAccent,),
+      //       Container(height: 200,width: 200,color: Colors.blueGrey,),
+      //     ],
+      //   ),
+      // ),
+
+      //Expanded//
+
+
+      // body: Row(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   children: [
+      //     Expanded(
+      //       flex: 2,
+      //       child: Container(
+      //         color: Colors.green,
+      //       ),
+      //     ),
+      //     Expanded(
+      //       flex: 3,
+      //       child: Container(
+      //         color: Colors.orangeAccent,
+      //       ),
+      //     ),
+      //     Expanded(
+      //       flex: 5,
+      //       child: Container(
+      //         color: Colors.redAccent,
+      //       ),
+      //     ),
+      //     Expanded(
+      //       flex: 9,
+      //       child: Container(
+      //         color: Colors.yellow,
+      //       ),
+      //     ),
+      //     Expanded(
+      //       flex: 12,
+      //       child: Container(
+      //         color: Colors.pinkAccent,
+      //       ),
+      //     ),
+      //   ],
+      // ),
+
+      //Flexible//
+
+
+      // body: Column(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   children: [
+      //     Flexible(
+      //       fit: FlexFit.loose,
+      //       flex: 23,
+      //       child: Container(
+      //        color: Colors.pinkAccent,
+      //     ),
+      //     ),
+      //     Flexible(
+      //       fit: FlexFit.loose,
+      //       flex: 20,
+      //       child: Container(
+      //         color: Colors.green,
+      //       ),
+      //     )
+      //   ],
+      // ),
+
+
+      //MediaQuery//
+
+
+      // body: Padding(
+      //   padding: const EdgeInsets.all(20),
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text('Screen Height=${height}'),
+      //       Text('Screen Width=${wight}'),
+      //       Text('Screen Orientation=${orientation}'),
+      //     ],
+      //   ),
+      // ),
+
     );
   }
 }
-
