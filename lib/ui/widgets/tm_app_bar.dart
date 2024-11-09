@@ -62,7 +62,7 @@ class TMAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             IconButton(
                 onPressed: () async {
-                  await AuthController.clearUserData('token');
+                  await AuthController.clearUserData();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
