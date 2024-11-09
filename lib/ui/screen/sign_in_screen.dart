@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:practice_2/ui/controllers/auth_controller.dart';
 import 'package:practice_2/ui/screen/forgot_password_email_screen.dart';
 import 'package:practice_2/ui/screen/main_bottom_navbar_screen.dart';
 import 'package:practice_2/ui/utility/app_Colors.dart';
@@ -173,6 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
     _inProgress = false;
     setState(() {});
     if (response.isSuccess) {
+      await AuthController.saveAccessToken(response.responeseData['token']);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
