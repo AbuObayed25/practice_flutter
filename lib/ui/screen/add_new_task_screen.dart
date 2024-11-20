@@ -20,60 +20,70 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   bool _addNewTaskInProgress = false;
+  bool _shouldRefreshPreviousPage = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: TMAppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Form(
-            key: _formkey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                Text('Add New Task',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 26),
-                TextFormField(
-                  controller: _titleTEController,
-                  decoration: InputDecoration(hintText: 'Title'),
-                  validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Enter a value";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  maxLines: 9,
-                  controller: _descriptionTEController,
-                  decoration: InputDecoration(hintText: 'Description'),
-                  validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Enter a value";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 26),
-                Visibility(
-                  visible: !_addNewTaskInProgress,
-                  replacement: CenteredCircularProgressIndicator(),
-                  child: ElevatedButton(
-                    onPressed: _onTapSubmitButton,
-                    child: Icon(Icons.arrow_circle_right_outlined),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        Navigator.pop(context,_shouldRefreshPreviousPage);
+      },
+      child: Scaffold(
+        appBar: const TMAppBar(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
-              ],
+                  Text('Add New Task',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 26),
+                  TextFormField(
+                    controller: _titleTEController,
+                    decoration: InputDecoration(hintText: 'Title'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return "Enter a value";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    maxLines: 9,
+                    controller: _descriptionTEController,
+                    decoration: InputDecoration(hintText: 'Description'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return "Enter a value";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 26),
+                  Visibility(
+                    visible: !_addNewTaskInProgress,
+                    replacement: CenteredCircularProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed: _onTapSubmitButton,
+                      child: Icon(Icons.arrow_circle_right_outlined),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -100,6 +110,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     _addNewTaskInProgress = false;
     setState(() {});
     if (response.isSuccess) {
+      _shouldRefreshPreviousPage = true;
       _clearTextFields();
       showSnackBarMessage(context, 'New task added');
     } else {

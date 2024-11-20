@@ -12,8 +12,11 @@ class NetworkCaller {
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
       Uri uri = Uri.parse(url);
-      debugPrint(url);
-      final Response response = await get(uri);
+      Map<String, String> headers = {
+        'token': AuthController.accessToken.toString(),
+      };
+      printRequest(url, null, headers);
+      final Response response = await get(uri, headers: headers);
       printResponse(url, response);
       if (response.statusCode == 200) {
         final decodeData = jsonDecode(response.body);
@@ -67,14 +70,14 @@ class NetworkCaller {
           statusCode: response.statusCode,
           responeseData: decodeData,
         );
-      } else if (response.statusCode==401){
+      } else if (response.statusCode == 401) {
         _moveToLogin();
         return NetworkResponse(
           isSuccess: false,
           statusCode: response.statusCode,
           errorMessage: 'unauthorized',
         );
-      }else {
+      } else {
         return NetworkResponse(
           isSuccess: false,
           statusCode: response.statusCode,
@@ -108,7 +111,7 @@ class NetworkCaller {
   static void _moveToLogin() {
     AuthController.clearUserData();
     Navigator.pushAndRemoveUntil(
-       TaskManagerApp.navigatorKey.currentContext! ,
+        TaskManagerApp.navigatorKey.currentContext!,
         MaterialPageRoute(builder: (context) => const SignInScreen()),
         (p) => false);
   }
