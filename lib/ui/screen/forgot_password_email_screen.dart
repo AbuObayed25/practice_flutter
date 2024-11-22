@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:practice_2/ui/utility/app_Colors.dart';
 import 'package:practice_2/ui/widgets/screen_background.dart';
-
 import 'forgot_password_otp_screen.dart';
 
 class ForgotPasswordEmailAddress extends StatefulWidget {

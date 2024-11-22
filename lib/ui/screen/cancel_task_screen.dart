@@ -19,26 +19,28 @@ class CancelTaskScreen extends StatefulWidget {
 class _CancelTaskScreenState extends State<CancelTaskScreen> {
   bool _getCancelledTaskListInProgress = false;
   List<TaskModel> _cancelledTaskList = [];
+
   @override
   void initState() {
     super.initState();
     _getCancelledTaskList();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: !_getCancelledTaskListInProgress,
       replacement: const CenteredCircularProgressIndicator(),
       child: RefreshIndicator(
-        onRefresh:  () async{
-        _getCancelledTaskList();
+        onRefresh: () async {
+          _getCancelledTaskList();
         },
         child: ListView.separated(
           itemCount: _cancelledTaskList.length,
           itemBuilder: (context, index) {
             return task_card(
               taskModel: _cancelledTaskList[index],
+              onRefreshList: _getCancelledTaskList,
             );
           },
           separatorBuilder: (context, index) {
@@ -48,15 +50,16 @@ class _CancelTaskScreenState extends State<CancelTaskScreen> {
       ),
     );
   }
+
   Future<void> _getCancelledTaskList() async {
     _cancelledTaskList.clear();
     _getCancelledTaskListInProgress = true;
     setState(() {});
     final NetworkResponse response =
-    await NetworkCaller.getRequest(url: Urls.cancelledTaskList);
+        await NetworkCaller.getRequest(url: Urls.cancelledTaskList);
     if (response.isSuccess) {
       final TaskListModel taskListModel =
-      TaskListModel.fromJson(response.responeseData);
+          TaskListModel.fromJson(response.responeseData);
       _cancelledTaskList = taskListModel.taskList ?? [];
     } else {
       showSnackBarMessage(context, response.errorMessage, true);

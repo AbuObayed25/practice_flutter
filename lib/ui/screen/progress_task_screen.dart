@@ -38,7 +38,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
           itemCount: _progressTaskList.length,
           itemBuilder: (context, index) {
            return task_card(
-             taskModel: _progressTaskList[index],
+             taskModel: _progressTaskList[index], onRefreshList: () {  },
            );
           },
           separatorBuilder: (context, index) {

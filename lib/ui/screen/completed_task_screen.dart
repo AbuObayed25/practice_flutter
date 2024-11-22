@@ -38,7 +38,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
           itemCount: _completedTaskList.length,
           itemBuilder: (context, index) {
             return task_card(
-              taskModel: _completedTaskList[index],
+              taskModel: _completedTaskList[index], onRefreshList: _getCompletedTaskList,
             );
           },
           separatorBuilder: (context, index) {
