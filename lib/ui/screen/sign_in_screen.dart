@@ -175,9 +175,9 @@ class _SignInScreenState extends State<SignInScreen> {
     _inProgress = false;
     setState(() {});
     if (response.isSuccess) {
-      LoginModel loginModel=LoginModel.fromJson(response.responeseData);
+      LoginModel loginModel = LoginModel.fromJson(response.responeseData);
       await AuthController.saveAccessToken(loginModel.token!);
-      await AuthController.saveUserData(loginModel.data!.first);
+      await AuthController.saveUserData(loginModel.data!);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

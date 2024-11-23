@@ -2,19 +2,35 @@ import 'package:practice_2/data/models/user_model.dart';
 
 class LoginModel {
   String? status;
-  List<UserModel>? data;
+  UserModel? data;
   String? token;
 
-  LoginModel({this.status, this.data, this.token});
+//   LoginModel({this.status, this.data, this.token});
+//
+//   LoginModel.fromJson(Map<String, dynamic> json) {
+//     status = json['status'];
+//     if (json['data'] != null) {
+//       data = UserModel.fromJson(json['data']);
+//     } else {
+//       data = null;
+//     }
+//     token = json['token'];
+//   }
+// }
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['data'] != null) {
-      data = <UserModel>[];
-      json['data'].forEach((v){
-        data!.add(UserModel.fromJson(v));
-      });
-      token = json['token'];
+    data = json['data'] != null ? UserModel.fromJson(json['data']) : null;
+    token = json['token'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
     }
+    data['token'] = token;
+    return data;
   }
 }
